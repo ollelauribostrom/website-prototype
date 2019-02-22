@@ -7,7 +7,7 @@ type Props = {
   slug: string;
   title: string;
   onClick: () => void;
-}
+};
 
 class NavigationItem extends React.Component<Props> {
   private element?: HTMLAnchorElement;
@@ -16,7 +16,7 @@ class NavigationItem extends React.Component<Props> {
     if (this.props.isActive) {
       this.element = ref;
     }
-  }
+  };
 
   componentDidMount() {
     if (this.element) {
@@ -35,11 +35,15 @@ class NavigationItem extends React.Component<Props> {
     }
 
     return (
-      <Link to={`/learn/${slug}`} ref={this.setReference} onClick={onClick} className={className}>
+      <Link
+        to={`/learn/${slug}`}
+        ref={this.setReference}
+        onClick={onClick}
+        className={className}>
         {title}
       </Link>
-    )
+    );
   }
 }
 
-export default NavigationItem
+export default NavigationItem;

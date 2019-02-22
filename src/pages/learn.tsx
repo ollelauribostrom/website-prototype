@@ -11,11 +11,11 @@ import Page404 from './404';
 type Props = {
   data: LearnPageData;
   location: Location;
-}
+};
 
 export default class LearnPage extends React.Component<Props> {
   prevOffset: number = -1;
-  
+
   componentDidMount() {
     this.magicHeroNumber();
   }
@@ -26,7 +26,9 @@ export default class LearnPage extends React.Component<Props> {
    * as it becomes sticky and overlays the hero banner.
    */
   magicHeroNumber = () => {
-    if (typeof window === 'undefined') { return; } // Guard for SSR.
+    if (typeof window === 'undefined') {
+      return;
+    } // Guard for SSR.
     const doc = window.document;
     const offset = Math.min(doc.scrollingElement!.scrollTop - 62, 210);
     if (Math.abs(this.prevOffset - offset) > 5) {
@@ -34,23 +36,29 @@ export default class LearnPage extends React.Component<Props> {
       doc.body.setAttribute('style', `--magic-hero-number: ${356 - offset}px`);
     }
     window.requestAnimationFrame(this.magicHeroNumber);
-  }
+  };
 
   render() {
     const { data, location } = this.props;
     const currentPage = location.pathname.split('/').pop();
-    const { activePage, previousPage, nextPage, navigationSections } = findActive(data.sections.group, currentPage);
+    const {
+      activePage,
+      previousPage,
+      nextPage,
+      navigationSections,
+    } = findActive(data.sections.group, currentPage);
     if (!activePage) {
       // Rendering 404 page as a component here
       // The reason is to show the 404 component but maintaining the url (instead of redirecting to 404)
-      return <Page404 />
+      return <Page404 />;
     }
 
     return (
       <Layout
-        title={`${activePage.frontmatter.title} by ${activePage.frontmatter.author}`}
-        description={activePage.frontmatter.description}
-      >
+        title={`${activePage.frontmatter.title} by ${
+          activePage.frontmatter.author
+        }`}
+        description={activePage.frontmatter.description}>
         <Hero title={activePage.frontmatter.title} />
         <Navigation activePage={activePage} sections={navigationSections} />
         <Article page={activePage} previous={previousPage} next={nextPage} />
@@ -59,51 +67,50 @@ export default class LearnPage extends React.Component<Props> {
   }
 }
 
-export const query = graphql`{
-  sections: allMarkdownRemark(
-    sort: {
-      fields: [fileAbsolutePath]
-      order: ASC
-    }
-  ) {
-    group(field: frontmatter___section) {
-      fieldValue
-      edges {
-        node {
-          id
-          fileAbsolutePath
-          html,
-          parent {
-            ... on File {
-              relativePath
+export const query = graphql`
+  {
+    sections: allMarkdownRemark(
+      sort: { fields: [fileAbsolutePath], order: ASC }
+    ) {
+      group(field: frontmatter___section) {
+        fieldValue
+        edges {
+          node {
+            id
+            fileAbsolutePath
+            html
+            parent {
+              ... on File {
+                relativePath
+              }
+            }
+            frontmatter {
+              title
+              description
+              author
+            }
+            fields {
+              slug
             }
           }
-          frontmatter {
-            title
-            description
-            author
+          next {
+            frontmatter {
+              title
+            }
+            fields {
+              slug
+            }
           }
-          fields {
-            slug
-          }
-        }
-        next {
-          frontmatter {
-            title
-          }
-          fields {
-            slug
-          }
-        }
-        previous {
-          frontmatter {
-            title
-          }
-          fields {
-            slug
+          previous {
+            frontmatter {
+              title
+            }
+            fields {
+              slug
+            }
           }
         }
       }
     }
   }
-}`;
+`;

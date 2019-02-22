@@ -1,6 +1,6 @@
-import { Link } from 'gatsby'
-import React from 'react'
-import logo from '../images/logo.svg'
+import { Link } from 'gatsby';
+import React from 'react';
+import logo from '../images/logo.svg';
 
 const Header = () => (
   <nav className="nav">
@@ -11,8 +11,7 @@ const Header = () => (
         display: 'flex',
         alignItems: 'center',
         listStyle: 'none',
-      }}
-    >
+      }}>
       <li>
         <Link to="/">
           <img src={logo} alt="Node.js" className="nav__logo" />
@@ -30,9 +29,8 @@ const Header = () => (
           GitHub
         </a>
       </li>
-
     </ul>
   </nav>
-)
+);
 
-export default Header
+export default Header;

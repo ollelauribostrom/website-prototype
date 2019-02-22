@@ -7,11 +7,11 @@ import './mobile.css';
 import SEO from './seo';
 
 type Props = {
-  children: React.ReactNode
-  title?: string
-  description?: string
-  img?: string
-}
+  children: React.ReactNode;
+  title?: string;
+  description?: string;
+  img?: string;
+};
 
 const Layout = ({ children, title, description, img }: Props) => (
   <>
@@ -19,6 +19,6 @@ const Layout = ({ children, title, description, img }: Props) => (
     <Header />
     <main>{children}</main>
   </>
-)
+);
 
-export default Layout
+export default Layout;
